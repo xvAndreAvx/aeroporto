@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+    xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+    <div style="max-width: 900px; margin: 2rem auto;">
+        <div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+            <h1 style="text-align: center;">AirLine Frontier</h1>
+            <h2 style="text-align: center;">Benvenuto ADMIN</h2>
+            
+            <p:fieldset legend="Gestione Aeroporti">
+                <!-- Utilizzare un contenitore flex per disporre le card orizzontalmente -->
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: center;">
+                    
+                    <!-- Card per Aerei -->
+                    <p:card style="flex: 1; min-width: 200px; max-width: 300px;">
+                        <f:facet name="subtitle">Aggiungi e gestisci Aerei</f:facet>
+                        <p:commandButton value="Registra Aereo" 
+                            action="#{navigationController.setCurrentView(navigationController.REGISTRAZIONE_AEREO)}"
+                            icon="pi pi-plus" style="width: 100%;" update=":mainForm" />
+                    </p:card>
+                    
+                    <!-- Card per Aeroporti -->
+                    <p:card style="flex: 1; min-width: 200px; max-width: 300px;">
+                        <f:facet name="subtitle">Aggiungi e gestisci Aeroporti</f:facet>
+                        <p:commandButton value="Registra Aeroporto"
+                            action="#{navigationController.setCurrentView(navigationController.MODEL_AEROPORTO)}"
+                            icon="pi pi-plus" style="width: 100%;"
+                            update=":mainForm" />
+                    </p:card>
+                    
+                    <!-- Card per Tratte -->
+                    <p:card style="flex: 1; min-width: 200px; max-width: 300px;">
+                        <f:facet name="subtitle">Aggiungi e gestisci Tratte</f:facet>
+                        <p:commandButton value="Registra Tratta"
+                            action="#{navigationController.setCurrentView(navigationController.MODEL_TRATTA)}"
+                            icon="pi pi-plus" style="width: 100%;"
+                            update=":mainForm" />
+                    </p:card>
+                    
+                    <!-- Card per Voli -->
+                    <p:card style="flex: 1; min-width: 200px; max-width: 300px;">
+                        <f:facet name="subtitle">Aggiungi e gestisci Voli</f:facet>
+                        <p:commandButton value="Registra Volo"
+                            action="#{navigationController.setCurrentView(navigationController.MODEL_VOLO)}"
+                            icon="pi pi-plus" style="width: 100%;"
+                            update=":mainForm" />
+                    </p:card>
+                </div>
+            </p:fieldset>
+            
+        </div>
+    </div>
+</ui:composition>

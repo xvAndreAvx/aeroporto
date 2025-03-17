@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+	<title>Login</title>
+	<h:outputStylesheet name="css/login-style.css" />
+</h:head>
+
+<h:body>
+	<div class="container">
+		<h:form id="loginForm">
+			<h1>AirLine Frontier</h1>
+			<h3>Login</h3>
+
+			<p:messages id="messages" showDetail="true" closable="true" />
+
+			<div class="form-field">
+				<p:outputLabel for="email" value="Email" />
+				<p:inputText id="email" value="#{utenteBean.utenteDTO.email}"
+					styleClass="full-width-input" />
+			</div>
+
+			<div class="form-field">
+				<p:outputLabel for="password" value="Password" />
+				<p:password id="password" value="#{utenteBean.utenteDTO.password}"
+					styleClass="full-width-input" />
+			</div>
+
+			<div class="button-container">
+				<p:commandButton value="Accedi" action="#{utenteBean.login}"
+					update="@form" process="@form" styleClass="login-button" />
+			</div>
+
+			<div class="footer">
+				<span>Non hai un account?</span>
+				<!-- Modificato per usare il nuovo metodo di navigazione che pulisce i campi -->
+				<p:commandLink action="#{utenteBean.navigaRegistrazione}"
+					value="Registrati" styleClass="register-link" immediate="true" />
+			</div>
+		</h:form>
+	</div>
+</h:body>
+</html>

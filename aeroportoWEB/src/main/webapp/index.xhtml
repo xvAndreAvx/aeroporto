@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="jakarta.faces.facelets">
+
+<f:metadata>
+	<f:viewAction action="#{utenteBean.verificaLogin}" />
+</f:metadata>
+
+<h:head>
+	<title>Home</title>
+</h:head>
+
+<h:body>
+
+	<!-- Navbar con PrimeFaces Menu -->
+	<h:form id="navbarForm">
+		<p:menubar>
+			<p:menuitem value="AirLine Frontier"
+				style="font-weight: bold; font-size: 1.2rem; color: #1976d2;"
+				action="#{navigationController.setCurrentView('HOME')}"
+				update=":mainForm" immediate="true" ajax="false" />
+
+			<f:facet name="options">
+				<div class="p-d-flex p-ai-center">
+					<p:menuButton value="#{utenteBean.utenteDTO.nome}"
+						icon="pi pi-user">
+						<p:menuitem value="Biglietti Acquistati"
+							action="#{navigationController.setCurrentView('MODEL_BIGLIETTI')}"
+							icon="pi pi-ticket" ajax="false" immediate="true" />
+						<p:menuitem value="Logout" action="#{utenteBean.logout}"
+							icon="pi pi-power-off" ajax="false" immediate="true"
+							style="color: red;" />
+					</p:menuButton>
+				</div>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+
+	<h:form id="mainForm">
+		<div
+			style="width: 100%; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+			<ui:fragment rendered="#{navigationController.currentView == 'HOME'}">
+				<!-- Primo pannello solo per amministratori -->
+				<p:fieldset id="adminPanel" header="Pannello Amministratore"
+                rendered="#{utenteBean.isAdmin()}" toggleable="true"
+                style="margin-bottom: 1rem; width: 100%;">
+					<ui:include src="/modelHomeAdmin.xhtml" />
+				</p:fieldset>
+
+				<!-- Secondo pannello per utenti normali -->
+				<p:fieldset id="utentePanel" header="Pannello Utente"
+                rendered="#{!utenteBean.isAdmin()}" toggleable="true"
+                style="margin-bottom: 1rem; width: 100%; max-width: 100%;">
+					<ui:include src="/modelHomeUtente.xhtml" />
+				</p:fieldset>
+			</ui:fragment>
+
+			<!-- Panel per la gestione aeroporti -->
+			<ui:fragment rendered="#{navigationController.isAeroportoView()}">
+				<ui:include src="/modelAeroporto.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione tratte -->
+			<ui:fragment rendered="#{navigationController.isTrattaView()}">
+				<ui:include src="/modelTratta.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione voli -->
+			<ui:fragment rendered="#{navigationController.isVoloView()}">
+				<ui:include src="/modelVolo.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione acquisti biglietti -->
+			<ui:fragment rendered="#{navigationController.isAcquistoView()}">
+				<ui:include src="/modelAcquisto.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione acquisti biglietti -->
+			<ui:fragment rendered="#{navigationController.isAereoView()}">
+				<ui:include src="/registrazioneAereo.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione biglietti utente -->
+			<ui:fragment rendered="#{navigationController.isBigliettiView()}">
+				<ui:include src="/modelBiglietti.xhtml" />
+			</ui:fragment>
+
+			<!-- Panel per la gestione passeggero utente -->
+			
+		</div>
+	</h:form>
+</h:body>
+</html>

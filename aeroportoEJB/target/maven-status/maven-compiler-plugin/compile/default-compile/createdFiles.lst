@@ -1,0 +1,16 @@
+com\serviceInt\UtenteService.class
+com\serviceInt\AereoService.class
+com\aeroportoService\UtenteServiceImpl.class
+com\serviceInt\TrattaService.class
+com\aeroportoService\PasseggeroServiceImpl.class
+com\aeroportoService\PrenotazioneServiceImpl.class
+com\serviceInt\PrenotazioneService.class
+com\aeroportoService\BigliettoServiceImpl.class
+com\aeroportoService\AeroportoServiceImpl.class
+com\serviceInt\AeroportoService.class
+com\serviceInt\BigliettoService.class
+com\serviceInt\PasseggeroService.class
+com\serviceInt\VoloService.class
+com\aeroportoService\TrattaServiceImpl.class
+com\aeroportoService\VoloServiceImpl.class
+com\aeroportoService\AereoServiceImpl.class

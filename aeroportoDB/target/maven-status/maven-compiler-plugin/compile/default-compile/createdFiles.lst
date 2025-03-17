@@ -1,0 +1,17 @@
+com\aeroportoDB\AereoDAO.class
+com\interfacce\AeroportoInterfacciaDAO.class
+com\interfacce\PasseggeroInterfacciaDAO.class
+com\interfacce\PrenotazioneInterfacciaDAO.class
+com\aeroportoDB\BigliettoDAO.class
+com\aeroportoDB\PasseggeroDAO.class
+com\aeroportoDB\AeroportoDAO.class
+com\interfacce\VoloInterfacciaDAO.class
+com\aeroportoDB\PrenotazioneDAO.class
+com\interfacce\BigliettoInterfacciaDAO.class
+com\producer\EntityManagerProducer.class
+com\interfacce\AereoInterfacciaDAO.class
+com\interfacce\TrattaInterfacciaDAO.class
+com\aeroportoDB\TrattaDAO.class
+com\interfacce\UtenteInterfacciaDAO.class
+com\aeroportoDB\VoloDAO.class
+com\aeroportoDB\UtenteDAO.class

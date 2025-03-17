@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+<div style="max-width: 440px; margin: 2rem auto;">
+    <div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+        <h2>Creazione Aeroporto</h2>
+        <br/>
+        <div class="form-field">
+            <p:outputLabel for="nome" value="Nome " />
+            <p:inputText id="nome"
+            value="#{aeroportoBean.aeroportoDTO.nome}"/>
+        </div>
+        <br/>
+        <div class="form-field">
+            <p:outputLabel for="citta" value="Citta " />
+            <p:inputText id="citta"
+            value="#{aeroportoBean.aeroportoDTO.citta}"/>
+        </div>
+        <br/>
+        <div class="button-group">
+            <p:commandButton value="Registra"
+            action="#{aeroportoBean.registrazione}"
+            update=":mainForm"
+            icon="pi pi-check"
+            style="margin-top: 1rem;"
+            process="@form" />
+            
+            <p:commandButton value="Indietro"
+            action="#{navigationController.setCurrentView('HOME')}"
+            update=":mainForm"
+            icon="pi pi-arrow-left"
+            style="margin-top: 1rem; margin-left: 10px;" />
+        </div>
+    </div>
+</div>
+
+</ui:composition>

@@ -1,0 +1,65 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+	<div style="max-width: 900px; margin: 1rem auto;">
+		<div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+
+			<h2 style="text-align: center; font-family: Roboto, sans-serif;">Lista
+				Voli</h2>
+			<h2 style="text-align: center; font-family: Roboto, sans-serif;">Inizia
+				il tuo viaggio con noi</h2>
+			<h3 style="text-align: center; font-family: Roboto, sans-serif;">Scegli
+				tra i voli disponibili</h3>
+
+			<p:panel styleClass="mt-3">
+				<p:dataTable id="tabellaVoli" value="#{voloBean.listaVoli}"
+					var="volo" emptyMessage="Nessun volo trovato"
+					sortBy="#{volo.dataPartenza}" sortOrder="ascending">
+
+					<p:column headerText="Codice Volo">
+						<h:outputText value="#{volo.codiceVolo}" />
+					</p:column>
+
+					<p:column headerText="Tratta" style="width: 20%;">
+						<h:outputText
+							value="#{volo.tratta.aeroportoInPartenza.citta} → #{volo.tratta.aeroportoInArrivo.citta}" />
+					</p:column>
+
+					<p:column headerText="Partenza" sortBy="#{volo.dataPartenza}">
+						<h:outputText value="#{volo.dataPartenza}">
+							<f:convertDateTime type="localDateTime"
+								pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Arrivo" sortBy="#{volo.dataArrivo}">
+						<h:outputText value="#{volo.dataArrivo}">
+							<f:convertDateTime type="localDateTime"
+								pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Posti disponibili">
+						<i class="pi pi-users"></i>
+						<h:outputText value=" #{volo.postiDisponibili}" />
+					</p:column>
+
+
+					<p:column headerText="" style="width: 20%;">
+						<p:commandButton value="Acquista Biglietto"
+							rendered="#{voloBean.isDisponibile(volo)}"
+							action="#{bigliettoBean.caricaAcquisto(volo.id)}"
+							icon="pi pi-ticket" style="width: 100%;" update=":mainForm" />
+						<h:outputText value="Biglietti Terminati"
+							styleClass="ui-state-error"
+							rendered="#{!voloBean.isDisponibile(volo)}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:poll listener="#{voloBean.caricaVoli}" update="tabellaVoli"
+				autoStart="true" />
+		</div>
+	</div>
+</ui:composition>

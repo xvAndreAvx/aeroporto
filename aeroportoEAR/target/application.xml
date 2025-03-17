@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/application_8.xsd" version="8">
+  <display-name>aeroportoEAR</display-name>
+  <module>
+    <web>
+      <web-uri>aeroportoWEB.war</web-uri>
+      <context-root>AeroportoProgect</context-root>
+    </web>
+  </module>
+  <module>
+    <ejb>aeroportoEJB.jar</ejb>
+  </module>
+  <library-directory>lib</library-directory>
+</application>

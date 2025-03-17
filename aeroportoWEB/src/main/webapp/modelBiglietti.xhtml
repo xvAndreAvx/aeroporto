@@ -1,0 +1,86 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+	<div
+		style="width: 95%; max-width: 1200px; margin: 0 auto; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+		<div class="p-text-center"
+			style="padding: 1.5rem 1.5rem 1rem; width: 100%;">
+
+			<h2 style="text-align: center; font-family: Roboto, sans-serif;">Lista
+				Biglietti</h2>
+
+			<p:panel styleClass="mt-3" style="width: 100%;">
+				<p:dataTable id="tabellaBiglietti"
+					value="#{bigliettoBean.listaBiglietti}" var="biglietto"
+					emptyMessage="Nessun biglietto acquistato"
+					sortBy="#{biglietto.volo.dataPartenza}" sortOrder="ascending"
+					style="width: 100%; margin: 0 auto;" resizableColumns="false">
+
+					<p:ajax event="rowSelect"
+						listener="#{passeggeroBean.caricaMieiPosti(biglietto.id)}" />
+
+					<p:column headerText="Codice Volo" style="width: 10%;">
+						<h:outputText value="#{biglietto.volo.codiceVolo}" />
+					</p:column>
+
+					<p:column headerText="Codice Prenotazione" style="width: 12%;">
+						<h:outputText value="#{biglietto.prenotazione.codice}" />
+					</p:column>
+
+					<p:column headerText="Tratta" style="width: 18%;">
+						<h:outputText
+							value="#{biglietto.volo.tratta.aeroportoInPartenza.citta} → #{biglietto.volo.tratta.aeroportoInArrivo.citta}" />
+					</p:column>
+
+					<p:column headerText="Partenza"
+						sortBy="#{biglietto.volo.dataPartenza}" style="width: 15%;">
+						<h:outputText value="#{biglietto.volo.dataPartenza}">
+							<f:convertDateTime type="localDateTime"
+								pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Arrivo" sortBy="#{biglietto.volo.dataArrivo}"
+						style="width: 15%;">
+						<h:outputText value="#{biglietto.volo.dataArrivo}">
+							<f:convertDateTime type="localDateTime"
+								pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Posti" style="width: 10%;">
+						<p:repeat value="#{passeggeroBean.caricaMieiPosti(biglietto.id)}"
+							var="passeggero">
+							<h:outputText value="#{passeggero.posto}"
+								styleClass="ui-badge ui-badge-primary m-1" />
+						</p:repeat>
+					</p:column>
+
+					<p:column headerText="Data Prenotazione" style="width: 15%;">
+						<h:outputText value="#{biglietto.prenotazione.dataAcquisto}">
+							<f:convertDateTime type="localDateTime"
+								pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Azioni"
+						style="width: 5%; text-align: center;">
+						<p:repeat value="#{passeggeroBean.caricaMieiPosti(biglietto.id)}"
+							var="passeggero">
+							<p:commandButton icon="pi pi-print" ajax="false"
+								style="width: 40px; height: 40px; margin: 5px auto; display: inline-block;"
+								styleClass="p-button-rounded p-button-secondary">
+								<p:fileDownload
+									value="#{bigliettoBean.getPdfStreamedContent(passeggero.posto, biglietto.id)}" />
+							</p:commandButton>
+						</p:repeat>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:poll listener="#{bigliettoBean.caricaBiglietti}"
+				update="tabellaBiglietti"  autoStart="true" />
+		</div>
+	</div>
+</ui:composition>

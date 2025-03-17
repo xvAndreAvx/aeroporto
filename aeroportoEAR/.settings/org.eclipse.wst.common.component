@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+                        
+    
+    
+    
+    
+    <wb-module deploy-name="aeroportoEAR-0.0.1-SNAPSHOT">
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
+                                                
+        
+        
+        
+        
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="aeroportoWEB.war" deploy-path="/" handle="module:/resource/aeroportoWEB/aeroportoWEB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aeroportoEJB.jar" deploy-path="/" handle="module:/resource/aeroportoEJB/aeroportoEJB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aeroportoDB.jar" deploy-path="/lib" handle="module:/resource/aeroportoDB/aeroportoDB">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="aeroportoEntity.jar" deploy-path="/lib" handle="module:/resource/aeroportoEntity/aeroportoEntity">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.aeroportoProgect-aeroportoUtility-0.0.1-SNAPSHOT.jar" deploy-path="/lib" handle="module:/resource/aeroportoUtility/aeroportoUtility">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="org.primefaces-primefaces-12.0.0-jakarta.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/primefaces/primefaces/12.0.0/primefaces-12.0.0-jakarta.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="com.pdflib-pdflib-9.0.4.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/com/pdflib/pdflib/9.0.4/pdflib-9.0.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+                                            
+    
+    
+    
+    
+    </wb-module>
+                    
+
+
+
+
+</project-modules>

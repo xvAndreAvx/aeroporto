@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" xmlns="https://jakarta.ee/xml/ns/persistence"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+<persistence-unit name="Aeroporto" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <non-jta-data-source>java:/Aeroporto</non-jta-data-source>
+
+    <class>com.aeroportoEntity.Aereo</class>
+    <class>com.aeroportoEntity.Utente</class>
+    <class>com.aeroportoEntity.Aeroporto</class>
+    <class>com.aeroportoEntity.Tratta</class>
+    <class>com.aeroportoEntity.Volo</class>
+    <class>com.aeroportoEntity.Prenotazione</class>
+    <class>com.aeroportoEntity.Passeggero</class>
+    <class>com.aeroportoEntity.Biglietto</class>
+	<exclude-unlisted-classes>false</exclude-unlisted-classes>
+	
+    <properties>
+        <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+        <property name="hibernate.show_sql" value="true"/>
+        <property name="hibernate.format_sql" value="true"/>
+    </properties>
+</persistence-unit>
+</persistence>

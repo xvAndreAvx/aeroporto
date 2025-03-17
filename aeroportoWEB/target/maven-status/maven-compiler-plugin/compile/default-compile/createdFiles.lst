@@ -1,0 +1,10 @@
+com\bean\AereoportoBean.class
+com\bean\AereoBean.class
+com\controller\NavigationController.class
+com\bean\PasseggeroBean.class
+com\bean\TrattaBean.class
+com\bean\BigliettoBean.class
+com\controller\Navigazione.class
+com\bean\PrenotazioneBean.class
+com\bean\VoloBean.class
+com\bean\UtenteBean.class

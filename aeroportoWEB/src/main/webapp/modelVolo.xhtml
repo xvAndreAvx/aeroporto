@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="jakarta.faces.html" 
+                xmlns:f="jakarta.faces.core"
+                xmlns:p="http://primefaces.org/ui" 
+                xmlns:ui="jakarta.faces.facelets">
+
+    <div style="max-width: 800px; margin: 2rem auto;">
+        <div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+            
+            <p:panel header="Registrazione Aereo">
+                <p:messages id="messagesAereo" showDetail="true" closable="true" />
+                <div class="ui-fluid">
+                
+                    <div style="margin-bottom: 1rem;">
+                        <p:outputLabel for="modello" value="Modello:" />
+                        <p:inputText id="modello" 
+                                    value="#{aereoController.aereoDTO.modello}"
+                                    style="width: 100%;" />
+                    </div>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <p:outputLabel for="capienza" value="Capienza:" />
+                        <p:inputText id="capienza"
+                                    value="#{aereoController.aereoDTO.capienza}"
+                                    style="width: 100%;" />
+                    </div>
+                    
+                    <div class="button-group"
+                        style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; width: 100%;">
+                        <p:commandButton value="Registra Aereo"
+                                        action="#{aereoController.registrazione}" 
+                                        update="@form"
+                                        icon="pi pi-check" 
+                                        style="width: 60%;" />
+                        <p:commandButton value="Indietro"
+                                        action="#{navigationController.setCurrentView('HOME')}"
+                                        update="@form" 
+                                        icon="pi pi-arrow-left" 
+                                        style="width: 60%;" />
+                    </div>
+                    
+                </div>
+            </p:panel>
+            
+        </div>
+    </div>
+</ui:composition>

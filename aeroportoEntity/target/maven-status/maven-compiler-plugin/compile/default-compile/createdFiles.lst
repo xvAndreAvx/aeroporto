@@ -1,0 +1,8 @@
+com\aeroportoEntity\Aereo.class
+com\aeroportoEntity\Aeroporto.class
+com\aeroportoEntity\Passeggero.class
+com\aeroportoEntity\Utente.class
+com\aeroportoEntity\Prenotazione.class
+com\aeroportoEntity\Tratta.class
+com\aeroportoEntity\Volo.class
+com\aeroportoEntity\Biglietto.class

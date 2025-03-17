@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="jakarta.faces.html"
+	xmlns:f="jakarta.faces.core" xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="jakarta.faces.facelets">
+
+<h:head>
+	<title>Login</title>
+</h:head>
+
+<h:body>
+	<div style="max-width: 440px; margin: 2rem auto;">
+
+		<h:form id="loginForm">
+			<div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+				<h1 style="text-align: center;">AirLine Frontier</h1>
+				<H2 style="text-align: center;">BENVENUTO</H2>
+				<h3 style="text-align: center;">Login</h3>
+				<p:messages id="messages" showDetail="true" closable="true" />
+				<p:fieldset>
+					<br />
+					<div class="form-field">
+						<p:outputLabel for="email" value="Email " />
+						<p:inputText id="email" value="#{utenteBean.utenteDTO.email}" />
+					</div>
+					<br />
+					<div class="form-field">
+						<p:outputLabel for="password" value="Password " />
+						<p:password id="password" value="#{utenteBean.utenteDTO.password}" />
+					</div>
+
+					<div class="button-group">
+						<p:commandButton value="Accedi" action="#{utenteBean.login}"
+							update="@form" process="@form" style="margin-top: 1rem;" />
+					</div>
+				</p:fieldset>
+
+				<div class="p-text-center"
+					style="padding: 1rem; border-top: 1px solid var(--surface-border);">
+					<span style="color: var(--text-color);">Non hai un account?</span>
+					<p:link outcome="registrazioneUtente" value="Registrati"
+						styleClass="register-link" />
+				</div>
+			</div>
+		</h:form>
+	</div>
+</h:body>
+</html>

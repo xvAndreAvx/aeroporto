@@ -1,0 +1,298 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+	<f:event type="preRenderView"
+		listener="#{bigliettoBean.caricaVoloSelezionato}" />
+
+	<div style="width: 95%; max-width: 1300px; margin: 1rem auto;">
+		<div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+
+			<h2 style="text-align: center; font-family: Roboto, sans-serif;">Acquista
+				Biglietto</h2>
+
+			<p:panel header="Nessun volo selezionato" styleClass="mt-3"
+				rendered="#{bigliettoBean.bigliettoDTO.volo == null}">
+				<p>Non è stato selezionato alcun volo. Per favore, torna alla
+					lista dei voli e seleziona un volo.</p>
+				<p:commandButton value="Torna alla lista voli"
+					action="#{navigationController.setCurrentView('HOME')}"
+					update=":mainForm" icon="pi pi-arrow-left" styleClass="mt-3" />
+			</p:panel>
+
+			<!-- Layout principale a due colonne quando un volo è selezionato -->
+			<div
+				style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px; margin-top: 1rem;"
+				rendered="#{bigliettoBean.bigliettoDTO.volo != null}">
+
+				<!-- Colonna di sinistra - Sempre dettagli volo -->
+				<div style="flex: 0 0 32%; min-width: 300px;">
+					<p:panel header="Dettagli del volo selezionato" styleClass="mt-3">
+						<p:panelGrid columns="2" styleClass="ui-panelgrid-blank ui-fluid"
+							columnClasses="ui-grid-col-4,ui-grid-col-8">
+							<p:outputLabel value="Codice Volo:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.codiceVolo}" />
+
+							<p:outputLabel value="Tratta:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.tratta.aeroportoInPartenza.nome} → #{bigliettoBean.bigliettoDTO.volo.tratta.aeroportoInArrivo.nome}" />
+
+							<p:outputLabel value="Data Partenza:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.dataPartenza}">
+								<f:convertDateTime type="localDateTime"
+									pattern="dd/MM/yyyy HH:mm" />
+							</p:outputLabel>
+
+							<p:outputLabel value="Data Arrivo:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.dataArrivo}">
+								<f:convertDateTime type="localDateTime"
+									pattern="dd/MM/yyyy HH:mm" />
+							</p:outputLabel>
+
+							<p:outputLabel value="Aereo:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.aereo.modello}" />
+
+							<p:outputLabel value="Posti disponibili:" />
+							<p:outputLabel
+								value="#{bigliettoBean.bigliettoDTO.volo.postiDisponibili}" />
+
+							<p:outputLabel value="Costo del volo:" />
+							<p:outputLabel value="#{bigliettoBean.bigliettoDTO.costo}">
+								<f:convertNumber type="currency" currencySymbol="€"
+									locale="it_IT" />
+							</p:outputLabel>
+						</p:panelGrid>
+					</p:panel>
+				</div>
+
+				<!-- Colonna destra - Contenuto dinamico in base allo stato -->
+				<div style="flex: 1; min-width: 300px;">
+					<!-- 1. Panel per i dati utente (se utente non confermato) -->
+					<p:panel header="Inserisci i dati per il tuo biglietto"
+						styleClass="mt-3" id="datiPanel"
+						rendered="#{!prenotazioneBean.utenteConfermato}">
+						<p:messages id="acquistoPanelMessages" showDetail="true"
+							closable="true" />
+
+						<div
+							style="display: flex; justify-content: space-between; margin-top: 1rem;">
+							<div style="width: 48%;">
+								<p:outputLabel for="email" value="Email " />
+								<p:inputText id="email"
+									value="#{prenotazioneBean.utenteDTO.email}" />
+							</div>
+
+							<div style="width: 48%;">
+								<p:outputLabel for="password" value="Password " />
+								<p:password id="password"
+									value="#{prenotazioneBean.utenteDTO.password}" />
+							</div>
+						</div>
+
+						<div style="margin-top: 1rem; text-align: right;">
+							<p:commandButton value="Conferma Utente"
+								action="#{prenotazioneBean.registrazione}" icon="pi pi-check"
+								update="@form" />
+						</div>
+					</p:panel>
+
+					<!-- 2. Panel per la scelta del posto (se utente confermato ma posto non scelto) -->
+					<p:panel header="Seleziona il tuo posto" styleClass="mt-3"
+						rendered="#{prenotazioneBean.utenteConfermato and !passeggeroBean.postoConfermato}">
+
+						<h3 style="text-align: center; margin-bottom: 1.5rem;">Seleziona
+							il tuo posto sull'aereo</h3>
+
+						<!-- Questo div contiene tutto lo schema dell'aereo -->
+						<h:panelGroup id="areaSelezionePosti"
+							rendered="#{passeggeroBean.righeAereo != null and passeggeroBean.righeAereo.size() > 0}">
+							<!-- Inizializza il volo prima di renderizzare lo schema -->
+							<f:event type="preRenderView"
+								listener="#{passeggeroBean.initVolo}" />
+
+							<!-- Intestazione colonne superiori -->
+							<div
+								style="display: flex; justify-content: center; margin-bottom: 10px;">
+								<div style="width: 30px; height: 30px;"></div>
+								<ui:repeat value="#{passeggeroBean.colonneDisponibili}"
+									var="colonna">
+									<div
+										style="width: 40px; height: 30px; margin: 2px; text-align: center; font-weight: bold;">
+										#{colonna}</div>
+								</ui:repeat>
+							</div>
+
+							<!-- Schema posti -->
+							<div style="max-height: 400px; overflow-y: auto; display: block;">
+								<ui:repeat value="#{passeggeroBean.righeAereo}" var="riga">
+									<div
+										style="display: flex; justify-content: center; margin-bottom: 5px;">
+										<!-- Numero riga -->
+										<div
+											style="width: 30px; height: 30px; line-height: 30px; margin-right: 5px; text-align: center;">
+											<h:outputText value="#{riga}" />
+										</div>
+
+										<!-- Posti della riga -->
+										<ui:repeat value="#{passeggeroBean.colonneDisponibili}"
+											var="colonna">
+											<div style="width: 40px; height: 30px; margin: 0 2px;">
+												<p:commandButton id="posto_#{riga}_#{colonna}"
+													value="#{riga}#{colonna}"
+													style="width: 40px; height: 30px; margin: 0; 
+    #{passeggeroBean.isPostoDisponibile(riga, colonna) ? 
+    (passeggeroBean.isPostoSelezionato(riga, colonna) ? 'background-color: #4CAF50; color: white;' : 'background-color: #FFFFFF; color: #333;') : 
+    'background-color: #CCCCCC; color: #666; cursor: not-allowed;'} 
+    border: 1px solid #DDD; font-size: 12px;"
+													disabled="#{!passeggeroBean.isPostoDisponibile(riga, colonna)}"
+													action="#{passeggeroBean.selezionaPosto(riga, colonna)}"
+													update="@form" />
+											</div>
+										</ui:repeat>
+
+										<!-- Frecce per le uscite di emergenza -->
+										<h:panelGroup
+											rendered="#{passeggeroBean.mostraUscitaEmergenza(riga)}">
+											<div
+												style="width: 30px; height: 30px; line-height: 30px; margin-left: 5px; text-align: center;">
+												<i class="pi pi-arrow-left" style="font-size: 1.2rem"></i>
+											</div>
+										</h:panelGroup>
+									</div>
+								</ui:repeat>
+							</div>
+
+							<!-- Intestazione colonne inferiori -->
+							<div
+								style="display: flex; justify-content: center; margin-top: 10px;">
+								<div style="width: 30px; height: 30px;"></div>
+								<ui:repeat value="#{passeggeroBean.colonneDisponibili}"
+									var="colonna">
+									<div
+										style="width: 40px; height: 30px; margin: 2px; text-align: center; font-weight: bold;">
+										#{colonna}</div>
+								</ui:repeat>
+							</div>
+						</h:panelGroup>
+
+						<!-- Legenda -->
+						<div
+							style="display: flex; justify-content: center; margin-top: 20px;">
+							<div
+								style="display: flex; align-items: center; margin-right: 20px;">
+								<div
+									style="width: 20px; height: 20px; background-color: #FFFFFF; border: 1px solid #DDD; margin-right: 5px;"></div>
+								<span>Disponibile</span>
+							</div>
+							<div
+								style="display: flex; align-items: center; margin-right: 20px;">
+								<div
+									style="width: 20px; height: 20px; background-color: #4CAF50; border: 1px solid #DDD; margin-right: 5px;"></div>
+								<span>Selezionato</span>
+							</div>
+							<div style="display: flex; align-items: center;">
+								<div
+									style="width: 20px; height: 20px; background-color: #CCCCCC; border: 1px solid #DDD; margin-right: 5px;"></div>
+								<span>Occupato</span>
+							</div>
+						</div>
+
+						<!-- Messaggio posti selezionati e pulsante conferma -->
+						<div style="margin-top: 20px; text-align: center;">
+							<p:outputPanel id="postiSelezionatiMsg"
+								rendered="#{not empty passeggeroBean.postiScelti}"
+								styleClass="ui-message ui-message-info ui-widget ui-corner-all"
+								style="margin-bottom: 10px; display: inline-block; padding: 8px 16px;">
+								<span class="ui-message-info-icon"></span>
+								<span class="ui-message-info-detail"> Hai selezionato
+									#{passeggeroBean.postiScelti.size()} posto/i: <strong>
+										<ui:repeat value="#{passeggeroBean.postiScelti}" var="posto"
+											varStatus="status">
+                    						#{posto}#{status.last ? '' : ', '}
+                						</ui:repeat>
+								</strong>
+								</span>
+							</p:outputPanel>
+						</div>
+
+						<!-- Pannello per inserire dati per ogni passeggero -->
+						<p:panel id="datiPasseggeriPanel"
+							header="Inserisci i dati dei passeggeri"
+							rendered="#{not empty passeggeroBean.postiScelti}"
+							styleClass="mt-3">
+
+							<p:messages id="datiPasseggeriMessages" showDetail="true"
+								closable="true" />
+
+							<!-- Form interno per i dati passeggeri, con struttura semplificata -->
+							<h:form id="passeggeriForm">
+								<!-- Loop attraverso ogni posto selezionato -->
+								<ui:repeat value="#{passeggeroBean.postiScelti}" var="posto"
+									varStatus="status">
+									<div class="card mb-3">
+										<div class="card-header bg-light">
+											<h5>Passeggero #{status.index + 1} - Posto #{posto}</h5>
+										</div>
+										<div class="card-body">
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="nome_#{posto}">Nome</label>
+													<p:inputText id="nome_#{posto}"
+														value="#{passeggeroBean.mappaPasseggeri[posto].nome}"
+														required="true" styleClass="form-control"
+														requiredMessage="Inserisci il nome per il posto #{posto}" />
+												</div>
+												<div class="col-md-4">
+													<label for="cognome_#{posto}">Cognome</label>
+													<p:inputText id="cognome_#{posto}"
+														value="#{passeggeroBean.mappaPasseggeri[posto].cognome}"
+														required="true" styleClass="form-control"
+														requiredMessage="Inserisci il cognome per il posto #{posto}" />
+												</div>
+												<div class="col-md-4">
+													<label for="cf_#{posto}">Codice Fiscale</label>
+													<p:inputText id="cf_#{posto}"
+														value="#{passeggeroBean.mappaPasseggeri[posto].codiceFiscale}"
+														required="true" styleClass="form-control"
+														requiredMessage="Inserisci il codice fiscale per il posto #{posto}" />
+												</div>
+											</div>
+										</div>
+									</div>
+								</ui:repeat>
+
+								<!-- Pulsante di conferma -->
+								<div class="text-right mt-3">
+									<p:commandButton value="Conferma Posti"
+										action="#{passeggeroBean.registrazione}" process="@form"
+										update="@this" ajax="true" styleClass="ui-button-success">
+										<f:setPropertyActionListener
+											value="#{bigliettoBean.bigliettoDTO.id}"
+											target="#{passeggeroBean.idBiglietto}" />
+									</p:commandButton>
+								</div>
+							</h:form>
+						</p:panel>
+					</p:panel>
+
+					<!-- 3. Panel conferma acquisto (quando posto è confermato) -->
+					<p:panel header="Completa acquisto" styleClass="mt-3"
+						rendered="#{passeggeroBean.postoConfermato}">
+						<div style="text-align: center; margin-bottom: 1rem;">
+							<h3>Confermato! Puoi procedere con l'acquisto.</h3>
+						</div>
+						<div class="p-d-flex p-jc-end mt-3" style="text-align: right;">
+							<p:commandButton value="Conferma Acquisto"
+								action="#{bigliettoBean.confermaBiglietto}" icon="pi pi-check"
+								styleClass="ui-button-success" />
+						</div>
+					</p:panel>
+				</div>
+			</div>
+		</div>
+	</div>
+</ui:composition>

@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+	<div style="max-width: 800px; margin: 2rem auto;">
+		<div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+
+			<p:panel header="Crea un Nuovo Volo">
+				<p:messages id="messagesVolo" showDetail="true" closable="true" />
+				<div class="ui-fluid">
+
+					<p:outputLabel for="tratta" value="Tratte disponibili:" />
+					<p:selectOneMenu id="tratta"
+						value="#{voloBean.idTrattaSelezionata}">
+						<f:selectItem itemLabel="Seleziona tratta" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{trattaBean.listaTratta}" var="tratta"
+							itemLabel="#{tratta.aeroportoPartenza.nome} (#{tratta.aeroportoPartenza.citta}) ➝ #{tratta.aeroportoArrivo.nome} (#{tratta.aeroportoArrivo.citta})"
+							itemValue="#{tratta.id}" />
+						<p:ajax event="change" update="tratta messagesVolo"
+							listener="#{voloBean.sceltaTratta}" />
+					</p:selectOneMenu>
+
+					<br />
+
+					<p:outputLabel for="aereo" value="Aerei disponibili:" />
+					<p:selectOneMenu id="aereo" value="#{voloBean.idAereoSelezionato}">
+						<f:selectItem itemLabel="Seleziona aereo" itemValue="#{null}"
+							noSelectionOption="true" />
+						<f:selectItems value="#{aereoController.listaAereo}" var="aereo"
+							itemLabel="#{aereo.modello} (capienza: #{aereo.capienza})"
+							itemValue="#{aereo.id}" />
+						<p:ajax event="change" update="tratta messagesVolo"
+							listener="#{voloBean.sceltaAereo}" />
+					</p:selectOneMenu>
+
+					<div
+						style="display: flex; justify-content: space-between; margin-top: 1rem;">
+						<div style="width: 48%;">
+							<p:outputLabel for="dataPartenza" value="Data Partenza:" />
+							<p:calendar id="dataPartenza"
+								value="#{voloBean.voloDTO.dataPartenza}"
+								pattern="dd/MM/yyyy HH:mm" showTime="true" style="width: 100%;" />
+						</div>
+
+						<div style="width: 48%;">
+							<p:outputLabel for="dataArrivo" value="Data Arrivo:" />
+							<p:calendar id="dataArrivo"
+								value="#{voloBean.voloDTO.dataArrivo}"
+								pattern="dd/MM/yyyy HH:mm" showTime="true" style="width: 100%;" />
+						</div>
+					</div>
+
+					<div style="width: 48%; margin: 1rem auto;">
+						<p:outputLabel for="costoBiglietto" value="Costo del Biglietto:" />
+						<p:inputNumber id="costoBiglietto" value="#{voloBean.bigliettoDTO.costo}"
+							symbol="€" symbolPosition="s" decimalSeparator=","
+							thousandSeparator="."
+							style="width: 100%;" />
+					</div>
+
+					<div class="button-group"
+						style="display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; width: 100%;">
+						<p:commandButton value="Crea Volo"
+							action="#{voloBean.registrazione}" update=":mainForm"
+							icon="pi pi-check" style="width: 60%;" />
+						<p:commandButton value="Indietro"
+							action="#{navigationController.setCurrentView('HOME')}"
+							update=":mainForm" icon="pi pi-arrow-left" style="width: 60%;" />
+					</div>
+
+				</div>
+			</p:panel>
+
+		</div>
+	</div>
+</ui:composition>

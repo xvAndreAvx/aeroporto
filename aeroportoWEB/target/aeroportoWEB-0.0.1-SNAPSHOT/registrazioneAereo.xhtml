@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="jakarta.faces.html" xmlns:f="jakarta.faces.core"
+	xmlns:p="http://primefaces.org/ui" xmlns:ui="jakarta.faces.facelets">
+
+	<div style="max-width: 440px; margin: 2rem auto;">
+		<h:form id="registrationForm">
+			<div class="p-text-center" style="padding: 1.5rem 1.5rem 1rem;">
+				<h1>Registrazione Aereo</h1>
+
+				<div class="form-field">
+					<p:outputLabel for="modello" value="Modello" />
+					<p:inputText id="modello"
+						value="#{aereoController.aereoDTO.modello}" />
+					<br />
+					<p:outputLabel for="capienza" value="Capienza" />
+					<p:inputText id="capienza"
+						value="#{aereoController.aereoDTO.capienza}" />
+				</div>
+
+				<div class="button-group">
+					<p:commandButton value="Registra"
+						action="#{aereoController.registrazione}" update="@form"
+						style="margin-top: 1rem;" />
+				</div>
+
+			</div>
+		</h:form>
+	</div>
+</ui:composition>
