@@ -229,7 +229,6 @@
 								closable="true" />
 
 							<!-- Form interno per i dati passeggeri, con struttura semplificata -->
-							<h:form id="passeggeriForm">
 								<!-- Loop attraverso ogni posto selezionato -->
 								<ui:repeat value="#{passeggeroBean.postiScelti}" var="posto"
 									varStatus="status">
@@ -269,13 +268,12 @@
 								<div class="text-right mt-3">
 									<p:commandButton value="Conferma Posti"
 										action="#{passeggeroBean.registrazione}" process="@form"
-										update="@this" ajax="true" styleClass="ui-button-success">
+										update="@form" ajax="true" styleClass="ui-button-success">
 										<f:setPropertyActionListener
 											value="#{bigliettoBean.bigliettoDTO.id}"
 											target="#{passeggeroBean.idBiglietto}" />
 									</p:commandButton>
 								</div>
-							</h:form>
 						</p:panel>
 					</p:panel>
 
