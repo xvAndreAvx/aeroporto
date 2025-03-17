@@ -140,13 +140,13 @@ public class UtenteValidazione {
         if (codiceFiscale == null) {
             errori.add("Il codice fiscale è obbligatorio");
         } else {
-        	 if (nome.contains("  ")) {
+        	 if (codiceFiscale.contains("  ")) {
                  errori.add("Il codice fiscale non può contenere spazi multipli");
              }
-        	 if (cognome.length() > 16) {
+        	 if (codiceFiscale.length() > 16) {
                  errori.add("Il codice fiscale non può superare i 16 caratteri");
              }
-        	 if (cognome.length() < 16) {
+        	 if (codiceFiscale.length() < 16) {
                  errori.add("Il codice fiscale non può essere inferiore i 16 caratteri");
              }
         }

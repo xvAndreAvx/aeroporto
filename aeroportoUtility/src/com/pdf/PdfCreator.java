@@ -242,8 +242,8 @@ public class PdfCreator {
 
 		p.setFont(p.getFont(), 14.0);
 		p.showTextAt(MARGIN, PAGE_HEIGHT - 322,
-				"Nome: " + pdfBiglietto.getUtente().getNome() + " " + pdfBiglietto.getUtente().getCognome());
-		p.showTextAt(MARGIN, PAGE_HEIGHT - 342, "Email: " + pdfBiglietto.getUtente().getEmail());
+				"Nome: " + pdfBiglietto.getPasseggero().getNome() + " " + pdfBiglietto.getPasseggero().getCognome());
+		p.showTextAt(MARGIN, PAGE_HEIGHT - 342, "Codice Fiscale: " + pdfBiglietto.getPasseggero().getCodiceFiscale());
 		p.showTextAt(MARGIN, PAGE_HEIGHT - 362, "Posto prenotato: " + pdfBiglietto.getPasseggero().getPosto());
 	}
 
